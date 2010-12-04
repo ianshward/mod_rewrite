@@ -1,0 +1,10 @@
+# If the path is /home, for any subdomain except "www"
+# redirect to subdomain.example.com/dashboard.
+# Note, the backreference for the RewriteCond that matches 
+# the subdomain will only work if that RewriteCond is last,
+# just before the RewriteRule.
+
+RewriteCond %{REQUEST_URI} ^/home/?$
+RewriteCond %{HTTP_HOST} !^www. [NC]
+RewriteCond %{HTTP_HOST} ^([^.]+).example.com$ [NC]
+RewriteRule ^(.*)$ http://%1.example.com/dashboard [L,R=301]
